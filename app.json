@@ -3,6 +3,5 @@
   "description": "A light Rails App of Maestrano Impac!™.",
   "image": "heroku/ruby",
   "repository": "https://github.com/heroku/ruby-getting-started",
-  "keywords": ["ruby", "rails" ],
-  "addons": [ "heroku-postgresql" ]
+  "keywords": ["ruby", "rails" ]
 }
