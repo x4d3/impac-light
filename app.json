@@ -1,6 +1,6 @@
 {
-  "name": "Heroku Rails sample app",
-  "description": "A barebones Rails app, which can easily be deployed to Heroku",
+  "name": "Impac Light",
+  "description": "A light Rails App of Maestrano Impac!™.",
   "image": "heroku/ruby",
   "repository": "https://github.com/heroku/ruby-getting-started",
   "keywords": ["ruby", "rails" ],

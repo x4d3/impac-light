@@ -1,8 +1,8 @@
-# ruby-getting-started
+# Impac!™ Light
 
-A barebones Rails app, which can easily be deployed to Heroku.
+A light Rails App of Maestrano Impac!™.
 
-This application support the [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/getting-started-with-ruby) article - check it out.
+This project was bootstraped from the (https://github.com/heroku/ruby-getting-started) project. 
 
 ## Running Locally
 
@@ -14,6 +14,10 @@ $ cd ruby-getting-started
 $ bundle install
 $ bundle exec rake db:create db:migrate
 $ foreman start web
+```
+If you are on windows you may have to execute
+```sh
+gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
@@ -56,9 +60,4 @@ You can also use Docker to release to Heroku:
     heroku docker:release
     heroku open
 
-## Documentation
-
-For more information about using Ruby on Heroku, see these Dev Center articles:
-
-- [Ruby on Heroku](https://devcenter.heroku.com/categories/ruby)
 
