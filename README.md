@@ -4,6 +4,8 @@ A light Rails App of Maestrano Impac!™.
 
 This project was bootstraped from the (https://github.com/heroku/ruby-getting-started) project. 
 
+[![Build Status](https://travis-ci.org/z0rn/impac-light.svg?branch=master)](https://travis-ci.org/z0rn/impac-light)
+
 ### Installation
 
 create a `local_env.yml` file in `/config` from the `local_env.yml.sample`
