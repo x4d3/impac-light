@@ -19,6 +19,10 @@ If you are on windows you may have to execute
 ```sh
 gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
 ```
+and if you have trouble with nokogiri, follow this post (http://stackoverflow.com/questions/28985328/rubyinstaller-2-2-1-and-rails-rake-cannot-load-nokogiri/29196632#29196632)
+
+
+
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
