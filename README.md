@@ -6,6 +6,8 @@ This project was bootstraped from the (https://github.com/heroku/ruby-getting-st
 
 ### Installation
 
+create a `local_env.yml` file in `/config` from the `local_env.yml.sample`
+
 ### Windows
 
 - Make sure ton install the 2.2.3 version (not 64) (http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.3.exe)

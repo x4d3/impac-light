@@ -1,0 +1,16 @@
+# A sample Envfile
+# enable_defaults! { ENV['RACK_ENV'] != 'production' }
+
+# variable :REDIS_URL, :string, default: 'redis://localhost:6379'
+#
+# group :production do
+#   variable :SECRET_KEY_BASE
+# end
+
+variable :CONNEC_ENDPOINT, :string
+
+group :test do
+  variable :GROUP_ID, :string
+  variable :API_KEY, :string
+  variable :API_SECRET, :string
+end

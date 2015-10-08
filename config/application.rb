@@ -9,6 +9,7 @@ require "sprockets/railtie"
 # Auto-require default libraries and those for the current Rails environment. 
 Bundler.require :default, Rails.env
 
+
 module RubyGettingStarted
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -22,5 +23,18 @@ module RubyGettingStarted
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    
+    #Manage Rails Environment Variables using a local_env.yml file
+    #http://railsapps.github.io/rails-environment-variables.html
+    config.before_configuration do
+        env_file = File.join(Rails.root, 'config', 'local_env.yml')
+        YAML.load(File.open(env_file)).each do |key, value|
+            ENV[key.to_s] = value
+        end if File.exists?(env_file)
+		# Check for presence and coercibility of the variables (https://github.com/eval/envied)
+		ENVied.require(*ENV['ENVIED_GROUPS'] || Rails.groups)
+    end
   end
 end
+
+

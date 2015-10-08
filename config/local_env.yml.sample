@@ -1,0 +1,4 @@
+CONNEC_ENDPOINT: https://api-connec.maestrano.com/api/v2
+GROUP_ID: [YOURGROUPID]
+API_KEY: [YOUR_API_KEY]
+API_SECRET: [YOUR_API_SECRET]

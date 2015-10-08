@@ -35,4 +35,8 @@ gem 'puma'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# In order to resolve  resolve the TZInfo::DataSourceNotFound Errors (https://github.com/tzinfo/tzinfo/wiki/Resolving-TZInfo::DataSourceNotFound-Errors)
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
+# check enviroment variable presence (https://github.com/eval/envied)
+gem 'envied'
