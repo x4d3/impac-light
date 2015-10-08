@@ -4,27 +4,35 @@ A light Rails App of Maestrano Impac!™.
 
 This project was bootstraped from the (https://github.com/heroku/ruby-getting-started) project. 
 
-## Running Locally
+### Installation
 
-Make sure you have Ruby installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+### Windows
+
+- Make sure ton install the 2.2.3 version (not 64) (http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.3.exe)
+- install rails `gem install rails`
+- Follow what is on (https://devcenter.heroku.com/articles/getting-started-with-ruby#introduction) in particular please execute 
+```sh
+$ gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
+```
+- you may have to install the development kit (http://rubyinstaller.org/downloads/) (https://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
+
+### Running Locally
 
 ```sh
-$ git clone git@github.com:heroku/ruby-getting-started.git
+$ git clone https://github.com/z0rn/impac-light.git
 $ cd ruby-getting-started
 $ bundle install
-$ bundle exec rake db:create db:migrate
-$ foreman start web
+$ bundle exec rake
+$ bundle exec puma -C config/puma.rb
 ```
-If you are on windows you may have to execute
-```sh
-gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
-```
-and if you have trouble with nokogiri, follow this post (http://stackoverflow.com/questions/28985328/rubyinstaller-2-2-1-and-rails-rake-cannot-load-nokogiri/29196632#29196632)
+
+and if you have trouble with nokogiri, follow this [post](http://stackoverflow.com/a/31161208/1107536).
+- uninstall the nokogiri gem (you'll need to confirm because many gems depend on it)
+- download the nokogiri gem compiled on ruby 2.2 by Paul Grant (kudos for him) here: https://github.com/paulgrant999/ruby-2.2.2-nokogiri-1.6.6.2-x86-x64-mingw32.gem
+- installed the local gem ( gem install --local path/to/gem ) 32 bit version (in my case)
 
 
-
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:3000](http://localhost:3000/).
 
 ## Deploying to Heroku
 
@@ -34,34 +42,5 @@ $ git push heroku master
 $ heroku run rake db:migrate
 $ heroku open
 ```
-
-## Docker
-
-The app can be run and tested using the [Heroku Docker CLI plugin](https://devcenter.heroku.com/articles/introduction-local-development-with-docker).
-
-Make sure the plugin is installed:
-
-    heroku plugins:install heroku-docker
-
-Configure Docker and Docker Compose:
-
-    heroku docker:init
-
-And run the app locally:
-
-    docker-compose up web
-
-The app will now be available on the Docker daemon IP on port 8080.
-
-To work with the local database and do migrations, you can open a shell:
-
-    docker-compose run shell
-    bundle exec rake db:migrate
-
-You can also use Docker to release to Heroku:
-
-    heroku create
-    heroku docker:release
-    heroku open
 
 
