@@ -40,3 +40,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # check enviroment variable presence (https://github.com/eval/envied)
 gem 'envied'
+
+#make Rest call easier
+gem 'httparty'
