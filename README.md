@@ -47,7 +47,7 @@ $ rake tests
 
 ```sh
 $ heroku create
+$ heroku config:set CONNEC_ENDPOINT=https://api-connec.maestrano.com/api/v2
 $ git push heroku master
-$ heroku run rake db:migrate
 $ heroku open
 ```
