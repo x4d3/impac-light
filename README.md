@@ -1,4 +1,4 @@
-# Impac!™ Light
+# Impac! Light
 
 A light Rails App of Maestrano Impac!™.
 
@@ -20,7 +20,7 @@ $ gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
 ```
 - you may have to install the development kit (http://rubyinstaller.org/downloads/) (https://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
 
-### Running Locally
+## Running Locally
 
 ```sh
 $ git clone https://github.com/z0rn/impac-light.git
@@ -35,8 +35,13 @@ and if you have trouble with nokogiri, follow this [post](http://stackoverflow.c
 - download the nokogiri gem compiled on ruby 2.2 by Paul Grant (kudos for him) here: https://github.com/paulgrant999/ruby-2.2.2-nokogiri-1.6.6.2-x86-x64-mingw32.gem
 - installed the local gem ( gem install --local path/to/gem ) 32 bit version (in my case)
 
-
 Your app should now be running on [localhost:3000](http://localhost:3000/).
+
+## Running tests
+
+```sh
+$ rake tests
+```
 
 ## Deploying to Heroku
 
@@ -46,5 +51,3 @@ $ git push heroku master
 $ heroku run rake db:migrate
 $ heroku open
 ```
-
-

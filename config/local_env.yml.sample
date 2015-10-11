@@ -1,4 +1,5 @@
 CONNEC_ENDPOINT: https://api-connec.maestrano.com/api/v2
+CONNEC_OFFLINE_MODE: 'false'
 GROUP_ID: [YOURGROUPID]
 API_KEY: [YOUR_API_KEY]
 API_SECRET: [YOUR_API_SECRET]
