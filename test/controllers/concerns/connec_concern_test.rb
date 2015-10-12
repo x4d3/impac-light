@@ -6,7 +6,9 @@ class ConnecConcernTest < ActiveSupport::TestCase
     connecConcernObj.extend(ConnecConcern)
     auth = ConnecAuthentication.new(ENVied.GROUP_ID, ENVied.API_KEY, ENVied.API_SECRET)
     
-    test "getOrganizations" do
-        connecConcernObj.getOrganizations(auth)
+    test "getAccounts" do
+        accounts = connecConcernObj.getAccounts(auth)
+        assert accounts.length > 0
     end
+    
 end
