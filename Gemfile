@@ -41,5 +41,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # check enviroment variable presence (https://github.com/eval/envied)
 gem 'envied'
 
-#make Rest call easier
+# make Rest call easier
 gem 'httparty'
+# Behaviour Driven Development for Ruby.
+# Making TDD Productive and Fun.
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+end

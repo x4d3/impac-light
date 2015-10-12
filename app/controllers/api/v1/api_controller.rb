@@ -13,8 +13,10 @@ module Api::V1
       params.require(:organization_ids)
       organization_ids = params[:organization_ids]
       if (!organization_ids.kind_of?(Array))
-        raise 'organization_ids should be an array'
+        raise InvalidParameterError.new('organization_ids should be an array')
       end
     end
+  end
+  class InvalidParameterError < StandardError
   end
 end

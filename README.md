@@ -41,6 +41,7 @@ Your app should now be running on [localhost:3000](http://localhost:3000/).
 
 ```sh
 $ rake tests
+$ bundle exec rspec
 ```
 
 ## Deploying to Heroku
