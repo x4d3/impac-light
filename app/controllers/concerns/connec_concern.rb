@@ -14,10 +14,10 @@ module ConnecConcern
   def getList(connectAuth, suffix)
     if ENVied.CONNEC_OFFLINE_MODE
       # the application is in offline mode (for development and test)
-      # TODO: find an easier way to reference the mock_http_responses file.
-      responsesPath = File.join(Rails.root, 'app', 'controllers', 'concerns', 'mock_http_responses.yaml')
+      # TODO: find an easier way to reference the mock file.
+      responsesPath = File.join(Rails.root, 'app', 'controllers', 'concerns', 'mock', suffix)
       File.open(responsesPath) do |file|
-        JSON.parse YAML.load(file)[suffix]
+        JSON.parse file.read
       end
     else
       auth = connectAuth.getHttpAuthentication
