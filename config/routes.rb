@@ -8,7 +8,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       # We are going to list our resources here
       namespace :accounts do
-        resources :assets_summary
+        resources :assets_summary, :expenses_revenue
+        namespace :accounting_values do
+          resources :ebitda
+        end
       end
     end
   end

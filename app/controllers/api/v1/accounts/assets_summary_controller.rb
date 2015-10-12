@@ -12,8 +12,7 @@ module Api::V1::Accounts
   class AssetsSummaryController < ApiController
     def index
       organization_ids = params[:organization_ids]
-      auth = ConnecAuthentication.new(ENVied.GROUP_ID, @username, @password)
-      accounts = getAccounts(auth)
+      accounts = getAccounts(getAuth())
       filteredAccount = accounts.select do |account|
         account['class'] == 'ASSET' &&  organization_ids.include?(account['channel_id'])
       end
