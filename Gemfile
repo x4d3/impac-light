@@ -48,3 +48,7 @@ gem 'httparty'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
 end
+
+# to make  Date.today.beginning_of_month call possible
+# http://stackoverflow.com/questions/1627679/whats-the-most-efficient-way-get-the-first-day-of-the-current-month
+gem 'activesupport'

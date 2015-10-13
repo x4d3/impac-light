@@ -6,6 +6,7 @@ require 'httparty'
 module ConnecConcern
   # this is the connec url endpoint, for example: https://api-connec.maestrano.com/api/v2
   END_POINT = ENVied.CONNEC_ENDPOINT
+  DATE_FORMAT = '%Y-%m-%d'
   # retrieve the accounts using the v2 end point
   def getAccounts(connecAuth)
     getV2Data(connecAuth, 'accounts')
@@ -16,15 +17,18 @@ module ConnecConcern
   def getAccountsSummary(connecAuth, query)
     getReportData(connecAuth, 'accounts_summary', query)
   end
+  def createHistQuery(from, to, period)
+    {:from => from.strftime(DATE_FORMAT), :to => to.strftime(DATE_FORMAT), :period => period}
+  end
   private
-  #Read the data using the V2 API, this manage pagination
+  # Read the data using the V2 API, this manage pagination
   def getV2Data(connecAuth, suffix)
     if ENVied.CONNEC_OFFLINE_MODE
       return readMockData(suffix)
     end
     url = "#{END_POINT}/v2/#{connecAuth.groupId}/#{suffix}"
     result = []
-    #manage pagination
+    # manage pagination
     skip = 0
     begin
       # FIXME: make sure the ruby installation contains the proper SSH certificate to communicate
@@ -45,7 +49,7 @@ module ConnecConcern
     url = "#{END_POINT}/reports/#{connecAuth.groupId}/#{suffix}"
     response = getHTTPResponse(connecAuth, url, query)
     if response.code != 200
-      raise "could not connect to Connec API: #{response.code}"
+      raise  "could not connect to Connec API: #{response.code}, #{response.body}"
     end
     JSON.parse response.body
   end

@@ -17,15 +17,6 @@ module Api::V1::Accounts
   # }
   class ExpensesRevenueController < ApiController
     def index
-      organization_ids = params[:organization_ids]
-      accounts = getAccounts(getAuth())
-      filteredAccount = accounts.select do |account|
-        account['class'] == 'ASSET' &&  organization_ids.include?(account['channel_id'])
-      end
-      summary =  filteredAccount.map do |account|
-        {:label => account['name'], :total => account['current_balance']}
-      end
-      render json: {:organizations => organization_ids, :currency => "EUR", :summary => summary}
     end
   end
 end

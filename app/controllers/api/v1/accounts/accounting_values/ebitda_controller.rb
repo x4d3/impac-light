@@ -20,21 +20,14 @@ module Api::V1::Accounts::AccountingValues
     EBITDA_LEGEND = 'Revenue - Expenses (excluding Taxes, Interests, Depreciation and Amortization)'
     def index
       organization_ids = params['organization_ids']
-      accounts = getAccounts(getAuth())
-      filteredAccount = accounts.select do |account|
-        # EBITDA only contains REVENUE and EXPENSE
-        account[:class] == 'REVENUE' &&  account[:type] == 'EXPENSE' &&  organization_ids.include?(account['channel_id']
-      end
-      groupedValues = sumAndGroupByDate(filteredAccount, 'created_at', 'current_balance')
       accounting = {}
       accounting[:currency ] = 'EUR'
-      accounting[:dates ] = groupedValues.dates
+      accounting[:dates ] = 'dates'
       accounting[:legend ] = EBITDA_LEGEND
       accounting[:type ] = 'EBITDA'
-      accounting[:values ] = groupedValues.values
+      accounting[:values ] = 'values'
       result = {:organizations => organization_ids, :accounting => accounting}
-      
-      render json: 
+      render json: result
     end
   end
 end
