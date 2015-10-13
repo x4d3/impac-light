@@ -48,8 +48,7 @@ $ bundle exec rspec
 
 ```sh
 $ heroku create
-$ heroku config:set CONNEC_ENDPOINT=https://api-connec.maestrano.com/api/v2
-$ heroku config:set GROUP_ID=[YOUR_GROUP_ID]
+$ heroku config:set CONNEC_ENDPOINT=https://api-connec.maestrano.com/api
 $ git push heroku master
 $ heroku open
 ```

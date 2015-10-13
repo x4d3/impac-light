@@ -1,9 +1,9 @@
 enable_defaults! 
 variable :CONNEC_ENDPOINT, :string
 variable :CONNEC_OFFLINE_MODE, :boolean, default: 'false'
-variable :GROUP_ID, :string
 
 group :test do
+  variable :GROUP_ID, :string
   variable :API_KEY, :string
   variable :API_SECRET, :string
 end

@@ -9,8 +9,8 @@ module Api::V1
         @password = password
       end
     end
-    def getAuth
-      ConnecAuthentication.new(ENVied.GROUP_ID, @username, @password)
+    def getAuth(groupId)
+      ConnecAuthentication.new(groupId, @username, @password)
     end
     def checkParameters
       params.require(:organization_ids)
