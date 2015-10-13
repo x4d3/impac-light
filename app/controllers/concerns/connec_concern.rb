@@ -4,22 +4,23 @@ require 'httparty'
 # if ENV["CONNEC_OFFLINE_MODE"] is true, answers will be generated using the 
 # mock_http_responses.yaml file
 module ConnecConcern
-  # this is the connec url endpoint, for example: https://api-connec.maestrano.com/api/v2
+  
+  # this is the connec url endpoint, for example: https://api-connec.maestrano.com/api
   END_POINT = ENVied.CONNEC_ENDPOINT
-  DATE_FORMAT = '%Y-%m-%d'
+  
   # retrieve the accounts using the v2 end point
   def getAccounts(connecAuth)
     getV2Data(connecAuth, 'accounts')
   end  
-  def getBalanceSheets(connecAuth, query)
-    getReportData(connecAuth, 'balance_sheet', query)
+  
+  def getBalanceSheets(connecAuth, histParameters = nil)
+    getReportData(connecAuth, 'balance_sheet', histParameters)
   end
-  def getAccountsSummary(connecAuth, query)
-    getReportData(connecAuth, 'accounts_summary', query)
+  
+  def getAccountsSummary(connecAuth, histParameters = nil)
+    getReportData(connecAuth, 'accounts_summary', histParameters)
   end
-  def createHistQuery(from, to, period)
-    {:from => from.strftime(DATE_FORMAT), :to => to.strftime(DATE_FORMAT), :period => period}
-  end
+  
   private
   # Read the data using the V2 API, this manage pagination
   def getV2Data(connecAuth, suffix)
@@ -42,25 +43,29 @@ module ConnecConcern
     end until result.length == pagination['total']
     result
   end
-  def getReportData(connecAuth, suffix, query)
+  
+  # histParameters is optional
+  def getReportData(connecAuth, suffix, histParameters)
     if ENVied.CONNEC_OFFLINE_MODE
       return readMockData(suffix)
     end
     url = "#{END_POINT}/reports/#{connecAuth.groupId}/#{suffix}"
+    query = histParameters.nil? ? {} : histParameters.toHttpQuery
     response = getHTTPResponse(connecAuth, url, query)
     if response.code != 200
       raise  "could not connect to Connec API: #{response.code}, #{response.body}"
     end
     JSON.parse response.body
   end
-  def readMockData(suffix)
-      # the application is in offline mode (for development and test)
+  # read json data directly from files when the application is in offline mode (for development and test)
+  def readMockData(suffix)  
       # TODO: find an easier way to reference the mock file.
       responsesPath = File.join(Rails.root, 'app', 'controllers', 'concerns', 'mock', suffix)
       File.open(responsesPath) do |file|
         JSON.parse file.read
       end
   end
+  
   def getHTTPResponse(connecAuth, url, query)
     auth = connecAuth.getHttpAuthentication
     # FIXME: make sure the ruby installation contains the proper SSH certificate to communicate

@@ -1,6 +1,5 @@
 module Api::V1::Accounts
-  
-# Returns an array of all your accounts of the category “Assets” values.
+  # Returns an array of all your accounts of the category “Assets” values.
   #  {
   #    "organizations": ["org-abcd","org-qwer"],
   #    "currency": "EUR",
@@ -21,10 +20,10 @@ module Api::V1::Accounts
       # get last day of month: >>1 shift one month, - 1 remove one day
       lastDayOfMonth = (startDayOfMonth >> 1) - 1
       # getAccountsSummary for this current month
-      query = createHistQuery(startDayOfMonth, lastDayOfMonth, 'MONTHLY')
+      histparameters =  HistParameters.new(startDayOfMonth, lastDayOfMonth, HistParameters::MONTHLY)
       for organization_id in organization_ids
         connecAuth = getAuth(organization_id)
-        result = getAccountsSummary(connecAuth, query)
+        result = getAccountsSummary(connecAuth, histparameters)
         accountsSummary.concat(result['accounts'])
       end
       #only take AssetClass account
