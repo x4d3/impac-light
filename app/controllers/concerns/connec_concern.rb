@@ -21,6 +21,10 @@ module ConnecConcern
     getReportData(connecAuth, 'accounts_summary', histParameters)
   end
   
+  def getIncomeStatement(connecAuth, histParameters = nil)
+    getReportData(connecAuth, 'income_statement', histParameters)
+  end
+  
   private
   # Read the data using the V2 API, this manage pagination
   def getV2Data(connecAuth, suffix)
