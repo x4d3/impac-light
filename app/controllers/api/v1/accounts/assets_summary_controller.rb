@@ -16,14 +16,11 @@ module Api::V1::Accounts
     def index
       organization_ids = params[:organization_ids]
       accountsSummary = []
-      startDayOfMonth = Date.today.beginning_of_month
-      # get last day of month: >>1 shift one month, - 1 remove one day
-      lastDayOfMonth = (startDayOfMonth >> 1) - 1
       # getAccountsSummary for this current month
-      histparameters =  HistParameters.new(startDayOfMonth, lastDayOfMonth, HistParameters::MONTHLY)
+      histParameters =  HistParameters.new(Date.today.beginning_of_month, Date.today, HistParameters::MONTHLY)
       for organization_id in organization_ids
         connecAuth = getAuth(organization_id)
-        result = getAccountsSummary(connecAuth, histparameters)
+        result = getAccountsSummary(connecAuth, histParameters)
         accountsSummary.concat(result['accounts'])
       end
       #only take AssetClass account
