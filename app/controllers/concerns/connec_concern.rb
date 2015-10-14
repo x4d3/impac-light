@@ -41,8 +41,6 @@ module ConnecConcern
     # manage pagination
     skip = 0
     begin
-      # FIXME: make sure the ruby installation contains the proper SSH certificate to communicate
-      # with the connec end point in order to remove the :verify => false
       query = {:$skip => skip}
       response = get_http_response(connec_auth, url, query)
       parsed_response = JSON.parse response.body
