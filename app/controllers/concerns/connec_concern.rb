@@ -14,29 +14,29 @@ module ConnecConcern
   END_POINT = ENVied.CONNEC_ENDPOINT
   
   # retrieve the accounts using the v2 end point
-  def getAccounts(connecAuth)
-    getV2Data(connecAuth, 'accounts')
+  def get_accounts(connec_auth)
+    getV2Data(connec_auth, 'accounts')
   end  
   
-  def getBalanceSheets(connecAuth, histParameters = nil)
-    getReportData(connecAuth, 'balance_sheet', histParameters)
+  def get_balance_sheets(connec_auth, hist_parameters = nil)
+    get_report_data(connec_auth, 'balance_sheet', hist_parameters)
   end
   
-  def getAccountsSummary(connecAuth, histParameters = nil)
-    getReportData(connecAuth, 'accounts_summary', histParameters)
+  def get_accounts_summary(connec_auth, hist_parameters = nil)
+    get_report_data(connec_auth, 'accounts_summary', hist_parameters)
   end
   
-  def getIncomeStatement(connecAuth, histParameters = nil)
-    getReportData(connecAuth, 'income_statement', histParameters)
+  def get_income_statement(connec_auth, hist_parameters = nil)
+    get_report_data(connec_auth, 'income_statement', hist_parameters)
   end
   
   private
   # Read the data using the V2 API, this manage pagination
-  def getV2Data(connecAuth, suffix)
+  def getV2Data(connec_auth, suffix)
     if ENVied.CONNEC_OFFLINE_MODE
-      return readMockData(suffix)
+      return read_mock_data(suffix)
     end
-    url = "#{END_POINT}/v2/#{connecAuth.groupId}/#{suffix}"
+    url = "#{END_POINT}/v2/#{connec_auth.group_id}/#{suffix}"
     result = []
     # manage pagination
     skip = 0
@@ -44,27 +44,27 @@ module ConnecConcern
       # FIXME: make sure the ruby installation contains the proper SSH certificate to communicate
       # with the connec end point in order to remove the :verify => false
       query = {:$skip => skip}
-      response = getHTTPResponse(connecAuth, url, query)
-      parsedResponse = JSON.parse response.body
-      result.concat(parsedResponse[suffix])
-      pagination = parsedResponse['pagination']
+      response = get_http_response(connec_auth, url, query)
+      parsed_response = JSON.parse response.body
+      result.concat(parsed_response[suffix])
+      pagination = parsed_response['pagination']
       skip += pagination['top']
     end until result.length == pagination['total']
     result
   end
   
-  # histParameters is optional
-  def getReportData(connecAuth, suffix, histParameters)
+  # hist_parameters is optional
+  def get_report_data(connec_auth, suffix, hist_parameters)
     if ENVied.CONNEC_OFFLINE_MODE
-      return readMockData(suffix)
+      return read_mock_data(suffix)
     end
-    url = "#{END_POINT}/reports/#{connecAuth.groupId}/#{suffix}"
-    query = histParameters.nil? ? {} : histParameters.toHttpQuery
-    response = getHTTPResponse(connecAuth, url, query)
+    url = "#{END_POINT}/reports/#{connec_auth.group_id}/#{suffix}"
+    query = hist_parameters.nil? ? {} : hist_parameters.to_http_query
+    response = get_http_response(connec_auth, url, query)
     JSON.parse response.body
   end
   # read json data directly from files when the application is in offline mode (for development and test)
-  def readMockData(suffix)  
+  def read_mock_data(suffix)  
       # TODO: find an easier way to reference the mock file.
       responsesPath = File.join(Rails.root, 'app', 'controllers', 'concerns', 'mock', suffix)
       File.open(responsesPath) do |file|
@@ -72,8 +72,8 @@ module ConnecConcern
       end
   end
   
-  def getHTTPResponse(connecAuth, url, query)
-    auth = connecAuth.getHttpAuthentication
+  def get_http_response(connec_auth, url, query)
+    auth = connec_auth.get_http_authentication
     # FIXME: make sure the ruby installation contains the proper SSH certificate to communicate
     # with the connec end point in order to remove the :verify => false
     input = {:basic_auth => auth, :verify => false, :query => query}

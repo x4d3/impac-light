@@ -18,14 +18,14 @@ module Api::V1::Accounts
   class ExpensesRevenueController < Api::V1::ApiController
     def index
       organization_ids = params[:organization_ids]
-      histParameters = getHistParameters
+      hist_parameters = get_hist_parameters
       expenses = []
       revenue = []
       dates = []
       organization_ids.each_with_index  do |organization_id, i|
-        connecAuth = getAuth(organization_id)
-        connecResult = getIncomeStatement(connecAuth, histParameters)
-        income_statements = connecResult['income_statements']
+        connec_auth = get_auth(organization_id)
+        connec_result = get_income_statement(connec_auth, hist_parameters)
+        income_statements = connec_result['income_statements']
         #The income_statements contains an extra YTD value at the end that needs to be removed
         income_statements = income_statements[0...-1]
         income_statements.each_with_index do |income_statement, j|
@@ -42,7 +42,7 @@ module Api::V1::Accounts
       result[:organizations] = organization_ids
       result[:values] = {:expenses => expenses, :revenue => revenue}
       result[:dates] = dates
-      result[:histParameters] = histParameters.toHttpQuery
+      result[:hist_parameters] = hist_parameters.to_http_query
       result[:organizations] = organization_ids
       render json: result
     end

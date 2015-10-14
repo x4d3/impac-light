@@ -22,14 +22,14 @@ class HistParameters
     
     attr_reader :from, :to, :period
     
-    def self.fromHttpParameters(parameters)
+    def self.from_http_parameters(parameters)
       from = Date.strptime(parameters['from'], DATE_FORMAT)
       to = Date.strptime(parameters['to'], DATE_FORMAT)
       period = parameters['period']
       HistParameters.new(from, to, period)
     end
     
-    def toHttpQuery
+    def to_http_query
       {:from => @from.strftime(DATE_FORMAT), :to => @to.strftime(DATE_FORMAT), :period => period}
     end
     

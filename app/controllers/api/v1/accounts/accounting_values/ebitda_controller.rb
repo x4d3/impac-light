@@ -19,18 +19,18 @@ module Api::V1::Accounts::AccountingValues
   #         "period": "MONTHLY"
   #     }
   # }
-  class EbitdaController < ApiController
+  class EbitdaController < Api::V1::ApiController
     EBITDA_LEGEND = 'Revenue - Expenses (excluding Taxes, Interests, Depreciation and Amortization)'
     #Subtype excluded for EBITDA computation
-    EXCLUDED_SUBTYPES = ['GLOBALTAXEXPENSE', 'TAXESPAID']
+    EXCLUDED_SUBTYPES = ['GLOBALTAXEXPENSE', 'TAXESPAID', 'DEPRECIATION']
     def index
       organization_ids = params[:organization_ids]
-      histParameters = getHistParameters
+      hist_parameters = get_hist_parameters
       dates = []
       values = []
       organization_ids.each_with_index  do |organization_id, i|
-        connecAuth = getAuth(organization_id)
-        connecResult = getIncomeStatement(connecAuth, histParameters)
+        connec_auth = get_auth(organization_id)
+        connecResult = get_income_statement(connec_auth, hist_parameters)
         income_statements = connecResult['income_statements']
         #The income_statements contains an extra YTD value at the end that needs to be removed
         income_statements = income_statements[0...-1]
@@ -52,7 +52,7 @@ module Api::V1::Accounts::AccountingValues
       accounting[:legend ] = EBITDA_LEGEND
       accounting[:type ] = 'EBITDA'
       accounting[:values ] = values
-      render json: {:organizations => organization_ids, :accounting => accounting, :hist_parameters => histParameters.toHttpQuery}
+      render json: {:organizations => organization_ids, :accounting => accounting, :hist_parameters => hist_parameters.to_http_query}
     end
     
     private

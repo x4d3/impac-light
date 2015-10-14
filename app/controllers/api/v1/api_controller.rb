@@ -18,20 +18,20 @@ module Api::V1
       end
     end
 
-    def getHistParameters
-      histParameters = params[:hist_parameters]
-      if(histParameters.nil?)
-        # if no histParameters is given we return a Year to Date histParameters
+    def get_hist_parameters
+      hist_parameters = params[:hist_parameters]
+      if(hist_parameters.nil?)
+        # if no hist_parameters is given we return a Year to Date hist_parameters
         from = Date.today.beginning_of_year
         to = Date.today
         HistParameters.new(from, to, HistParameters::MONTHLY)
       else
-        parsed = JSON.parse(histParameters)
-        HistParameters.fromHttpParameters(parsed)
+        parsed = JSON.parse(hist_parameters)
+        HistParameters.from_http_parameters(parsed)
       end
     end
 
-    def getAuth(groupId)
+    def get_auth(groupId)
       ConnecAuthentication.new(groupId, @username, @password)
     end
 

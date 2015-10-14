@@ -15,21 +15,21 @@ module Api::V1::Accounts
     require 'active_support'
     def index
       organization_ids = params[:organization_ids]
-      accountsSummary = []
-      # getAccountsSummary for this current month
-      histParameters =  HistParameters.new(Date.today.beginning_of_month, Date.today, HistParameters::MONTHLY)
+      accounts_summary = []
+      # get_accounts_summary for this current month
+      hist_parameters =  HistParameters.new(Date.today.beginning_of_month, Date.today, HistParameters::MONTHLY)
       for organization_id in organization_ids
-        connecAuth = getAuth(organization_id)
-        result = getAccountsSummary(connecAuth, histParameters)
-        accountsSummary.concat(result['accounts'])
+        connec_auth = get_auth(organization_id)
+        result = get_accounts_summary(connec_auth, hist_parameters)
+        accounts_summary.concat(result['accounts'])
       end
       #only take AssetClass account
-      filteredAccount = accountsSummary.select do |account|
+      filtered_account = accounts_summary.select do |account|
         account['classification'] == 'ASSET'
       end
       # TODO: manage multi currency
       currency = nil
-      summary =  filteredAccount.map do |account|
+      summary =  filtered_account.map do |account|
         currency = account['currency']
         #we need to take the only value in the balances array
         {:label => account['name'], :total => account['balances'][0]['to_balance']}
