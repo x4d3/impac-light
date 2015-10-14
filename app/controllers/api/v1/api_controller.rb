@@ -6,6 +6,10 @@ module Api::V1
     
     before_filter :authenticate, :checkParameters
     
+    rescue_from ConnecConcern::ConnecAccessException do |exception|
+      render json: exception.message, status: exception.code
+    end
+
     protected
     def authenticate
       authenticate_or_request_with_http_basic do |username, password|
@@ -13,7 +17,7 @@ module Api::V1
         @password = password
       end
     end
-    
+
     def getHistParameters
       histParameters = params[:hist_parameters]
       if(histParameters.nil?)
@@ -26,11 +30,11 @@ module Api::V1
         HistParameters.fromHttpParameters(parsed)
       end
     end
-    
+
     def getAuth(groupId)
       ConnecAuthentication.new(groupId, @username, @password)
     end
-    
+
     def checkParameters
       params.require(:organization_ids)
       organization_ids = params[:organization_ids]

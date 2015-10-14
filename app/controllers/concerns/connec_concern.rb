@@ -4,7 +4,12 @@ require 'httparty'
 # if ENV["CONNEC_OFFLINE_MODE"] is true, answers will be generated using the 
 # mock_http_responses.yaml file
 module ConnecConcern
-  
+  class ConnecAccessException < StandardError
+   attr_reader :code
+    def initialize(code)
+      @code = code
+    end
+  end
   # this is the connec url endpoint, for example: https://api-connec.maestrano.com/api
   END_POINT = ENVied.CONNEC_ENDPOINT
   
@@ -56,9 +61,6 @@ module ConnecConcern
     url = "#{END_POINT}/reports/#{connecAuth.groupId}/#{suffix}"
     query = histParameters.nil? ? {} : histParameters.toHttpQuery
     response = getHTTPResponse(connecAuth, url, query)
-    if response.code != 200
-      raise  "could not connect to Connec API: #{response.code}, #{response.body}"
-    end
     JSON.parse response.body
   end
   # read json data directly from files when the application is in offline mode (for development and test)
@@ -77,7 +79,7 @@ module ConnecConcern
     input = {:basic_auth => auth, :verify => false, :query => query}
     response = HTTParty.get(url, input)
     if response.code != 200
-      raise "could not connect to Connec API: #{response.code}"
+      raise ConnecAccessException.new(response.code), "could not connect to Connec API: #{response.body}"
     end
     response
   end
