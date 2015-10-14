@@ -9,7 +9,7 @@ module Api::V1::Accounts
   #        {"label": "Asset Account 3", "total": 8954.45}
   #    ]
   # }
-  class AssetsSummaryController < ApiController
+  class AssetsSummaryController < Api::V1::ApiController
     #for date manipulation
     require 'date'
     require 'active_support'
@@ -34,7 +34,7 @@ module Api::V1::Accounts
         #we need to take the only value in the balances array
         {:label => account['name'], :total => account['balances'][0]['to_balance']}
       end
-      render json: {:organizations => organization_ids, :currency => currency, :summary => summary}
+      render json: {:organizations => organization_ids,:currency => currency,:summary => summary}
     end
   end
 end

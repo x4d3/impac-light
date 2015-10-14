@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::V1::Accounts::AssetsSummaryController, :type => :controller do
+RSpec.describe Api::V1::Accounts::ExpensesRevenueController, :type => :controller do
   # login to http basic auth
   before(:each) do
     user = ENVied.API_KEY

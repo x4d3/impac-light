@@ -5,6 +5,7 @@ module Api::V1
     require 'active_support'
     
     before_filter :authenticate, :checkParameters
+    
     protected
     def authenticate
       authenticate_or_request_with_http_basic do |username, password|
@@ -12,6 +13,7 @@ module Api::V1
         @password = password
       end
     end
+    
     def getHistParameters
       histParameters = params[:hist_parameters]
       if(histParameters.nil?)
@@ -20,13 +22,15 @@ module Api::V1
         to = Date.today
         HistParameters.new(from, to, HistParameters::MONTHLY)
       else
-        HistParameters.fromHttpParameters(histParameters)
+        parsed = JSON.parse(histParameters)
+        HistParameters.fromHttpParameters(parsed)
       end
     end
     
     def getAuth(groupId)
       ConnecAuthentication.new(groupId, @username, @password)
     end
+    
     def checkParameters
       params.require(:organization_ids)
       organization_ids = params[:organization_ids]
@@ -35,6 +39,7 @@ module Api::V1
       end
     end
   end
+
   class InvalidParameterError < StandardError
   end
 end

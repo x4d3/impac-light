@@ -15,8 +15,36 @@ module Api::V1::Accounts
   #         "period": "MONTHLY"
   #     }
   # }
-  class ExpensesRevenueController < ApiController
+  class ExpensesRevenueController < Api::V1::ApiController
     def index
+      organization_ids = params[:organization_ids]
+      histParameters = getHistParameters
+      expenses = []
+      revenue = []
+      dates = []
+      organization_ids.each_with_index  do |organization_id, i|
+        connecAuth = getAuth(organization_id)
+        connecResult = getIncomeStatement(connecAuth, histParameters)
+        income_statements = connecResult['income_statements']
+        #The income_statements contains an extra YTD value at the end that needs to be removed
+        income_statements = income_statements[0...-1]
+        income_statements.each_with_index do |income_statement, j|
+          if (i == 0)
+            dates[j] = income_statement['from']
+            expenses[j] = 0
+            revenue[j] = 0
+          end
+          expenses[j] += income_statement['total_operating_expenses']
+          revenue[j] += income_statement['total_revenue']
+        end
+      end
+      result = {}
+      result[:organizations] = organization_ids
+      result[:values] = {:expenses => expenses, :revenue => revenue}
+      result[:dates] = dates
+      result[:histParameters] = histParameters.toHttpQuery
+      result[:organizations] = organization_ids
+      render json: result
     end
   end
 end
