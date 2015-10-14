@@ -22,7 +22,7 @@ module Api::V1::Accounts::AccountingValues
   class EbitdaController < Api::V1::ApiController
     EBITDA_LEGEND = 'Revenue - Expenses (excluding Taxes, Interests, Depreciation and Amortization)'
     #Subtype excluded for EBITDA computation
-    EXCLUDED_SUBTYPES = ['GLOBALTAXEXPENSE', 'TAXESPAID', 'DEPRECIATION']
+    EXCLUDED_SUB_TYPES = ['GLOBALTAXEXPENSE', 'TAXESPAID', 'DEPRECIATION', 'INTERESTPAID', 'AMORTIZATION']
     def index
       organization_ids = params[:organization_ids]
       hist_parameters = get_hist_parameters
@@ -57,8 +57,7 @@ module Api::V1::Accounts::AccountingValues
     
     private
     def filterAndSumTotal(array)
-      array.reject {|x| EXCLUDED_SUBTYPES.include?(x["sub_type"])}.map {|x| x['total']}.inject(:+)
+      array.reject {|x| EXCLUDED_SUB_TYPES.include?(x["sub_type"])}.map {|x| x['total']}.inject(:+)
     end
-    
   end
 end

@@ -19,5 +19,14 @@ RSpec.describe Api::V1::Accounts::ExpensesRevenueController, :type => :controlle
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
+    it "responds successfully with an HTTP 200 status code with hist_parameters" do
+      get :index, :organization_ids => [ENVied.GROUP_ID], :hist_parameters => '{"from":"2015-01-01","to":"2015-02-14","period":"MONTHLY"}'
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+    it "fails with wrong hist_parameters" do
+      expect{get :index, :organization_ids => [ENVied.GROUP_ID], :hist_parameters => 'wrong_value'}.to raise_error(JSON::ParserError)
+      expect{get :index, :organization_ids => [ENVied.GROUP_ID], :hist_parameters => '{"from":"2015-01-01","to":"2005-02-14","period":"MONTHLY"}'}.to raise_error(ArgumentError)
+    end
   end
 end
