@@ -1,8 +1,7 @@
 require 'httparty'
 
 # utils method used to communicate with the connec API
-# if ENV["CONNEC_OFFLINE_MODE"] is true, answers will be generated using the 
-# mock_http_responses.yaml file
+# if ENV["CONNEC_OFFLINE_MODE"] is true, answers will be generated using the files in the mock folder
 module ConnecConcern
   class ConnecAccessException < StandardError
    attr_reader :code
