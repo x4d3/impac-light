@@ -3,6 +3,7 @@ require 'httparty'
 # utils method used to communicate with the connec API
 # if ENV["CONNEC_OFFLINE_MODE"] is true, answers will be generated using the files in the mock folder
 module ConnecConcern
+  # Exception raised when Connec Api access fails
   class ConnecAccessException < StandardError
    attr_reader :code
     def initialize(code)
