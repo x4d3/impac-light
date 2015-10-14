@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class HistParametersTest < ActionController::TestCase
-    require 'Date'
     
     test "normal HistParameters usage" do
       hp1 = HistParameters.new(DateTime.new(2000,1,1), DateTime.new(2001,1,1), HistParameters::MONTHLY)

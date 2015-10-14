@@ -1,6 +1,5 @@
 # this class describe an hist parameters given and received by the application
 class HistParameters
-    require 'Date'
     
     #Simple Enum Implementation (http://stackoverflow.com/a/5675566/1107536)
     PERIOD_TYPE = [YEARLY = 'YEARLY', MONTHLY = 'MONTHLY', WEEKLY = 'WEEKLY', DAILY = 'DAILY']
