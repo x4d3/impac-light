@@ -4,7 +4,7 @@ A light Rails App of Maestrano Impac!™.
 
 This project was bootstraped from the (https://github.com/heroku/ruby-getting-started) project. 
 
-[![Build Status](https://travis-ci.org/z0rn/impac-light.svg?branch=master)](https://travis-ci.org/z0rn/impac-light)
+[![Build Status](https://travis-ci.org/x4d3/impac-light.svg?branch=master)](https://travis-ci.org/x4d3/impac-light)
 
 ### Installation
 
@@ -23,7 +23,7 @@ $ gem install puma -v'2.9.1' -- --with-opt-dir=c:\openssl
 ## Running Locally
 
 ```sh
-$ git clone https://github.com/z0rn/impac-light.git
+$ git clone https://github.com/x4d3/impac-light.git
 $ cd ruby-getting-started
 $ bundle install
 $ bundle exec rake
